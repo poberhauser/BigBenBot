@@ -85,6 +85,7 @@ const getTimeInfo = () => {
 }
 
 // start the cron job
+console.log("BINGER BINGER")
 task.start();
 console.log("BING BONG");
 
