@@ -30,10 +30,12 @@ const task = cron.schedule('0 0 */1 * * *', async () => {
 	if (textChannel) {
 		const messageEmbed = new Discord.MessageEmbed()
 		.setColor('#FFD700')
-		.setTitle(`The time is now ${hour}:00 ${amPm} GMT${timezoneOffsetString}`)
-		
+		.setTitle(`⏲️ The time is now ${hour}:00 ${amPm} GMT${timezoneOffsetString} ⏲️`)
+		.setFooter('powered by retardation')
 		textChannel.send(messageEmbed);
 	}
+
+
 
 	// check if VC defined in config is empty
 	if (voiceChannel.members.size >= 1) {
