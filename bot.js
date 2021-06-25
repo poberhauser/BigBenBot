@@ -86,5 +86,8 @@ const getTimeInfo = () => {
 
 // start the cron job
 task.start();
+console.log("BING BONG");
+
+
 
 Client.login(TOKEN);
