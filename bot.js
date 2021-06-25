@@ -110,11 +110,6 @@ function timeCommand()
 		textChannel.send(messageEmbed);
 }
 
-
-
-// start the cron job
-task.start();
-
 client.on('message', (receivedMessage) => {
 	if (receivedMessage.author = client.user)
 		return
@@ -123,5 +118,10 @@ client.on('message', (receivedMessage) => {
 
 	}
 )
+
+// start the cron job
+task.start();
+
+
 
 Client.login(TOKEN);
