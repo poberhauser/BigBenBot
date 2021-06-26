@@ -1,19 +1,20 @@
-require('dotenv').config();
+ require('dotenv').config();
 const Discord = require('discord.js');
 const cron = require('node-cron');
-const client = new Discord.Client();
 
 const { TOKEN, VOICE_CHANNEL_ID, GUILD_ID, TEXT_CHANNEL_ID } = process.env;
 
-const Client = new Discord.Client();
+const client = new Discord.Client();
+client.commands = new Discord.Collection();
 
-let guild, voiceChannel, textChannel;
+let guild, voiceChannel, textChannel; 
+
 
 // When bot comes online check the guild and voice channel are valid
 // if they are not found the program will exit
-Client.on('ready', async () => {
+ client.on('ready', async () => {
 	try {
-		guild = await Client.guilds.fetch(GUILD_ID);
+		guild = await client.guilds.fetch(GUILD_ID);
 		voiceChannel = guild.channels.cache.get(VOICE_CHANNEL_ID);
 	} catch (error) {
 		console.log(error);
@@ -21,7 +22,7 @@ Client.on('ready', async () => {
 	}
 	textChannel = guild.channels.cache.get(TEXT_CHANNEL_ID);
 	console.log('Big Ben Ready...');
-});
+}); 
 
 // use node-cron to create a job to run every hour
 const task = cron.schedule('0 0 */1 * * *', async () => {
@@ -70,6 +71,7 @@ const task = cron.schedule('0 0 */1 * * *', async () => {
 const getTimeInfo = () => {
 	let time = new Date();
 	let hour = time.getHours() >= 12 ? time.getHours() - 12 : time.getHours();
+	let minutes = time.getMinutes();
 	hour = hour === 0 ? 12 : hour;
 	let amPm = time.getHours() >= 12 ? 'PM' : 'AM';
 	// get gmt offset in minutes and convert to hours
@@ -80,6 +82,7 @@ const getTimeInfo = () => {
 
 	return {
 		hour,
+		minutes,
 		amPm,
 		timezoneOffsetString
 	}
@@ -87,7 +90,7 @@ const getTimeInfo = () => {
 
 function processCommand(receivedMessage)
 {
-	let fullCommand = receivedMessage.content.substr(3)
+	let fullCommand = receivedMessage.content.substr(1)
 	let splitCommand = fullCommand.split(" ")
 	let primaryCommand = splitCommand[0]
 	let arguments = splitCommand.slice(1)
@@ -101,27 +104,27 @@ function processCommand(receivedMessage)
 
 function timeCommand()
 {
-	let { hour, amPm, timezoneOffsetString } = getTimeInfo()
+	let { hour, minutes, amPm, timezoneOffsetString } = getTimeInfo()
 
 	const messageEmbed = new Discord.MessageEmbed()
 			.setColor('#FFD700')
-			.setTitle(`BONG BONG BONG The time is now ${hour}:00 ${amPm} GMT${timezoneOffsetString} ⏲️`)
+			.setTitle(`BONG BONG BONG The time is now ${hour}:${minutes} ${amPm} GMT${timezoneOffsetString} ⏲️`)
 			.setFooter('powered by retardation')
 		textChannel.send(messageEmbed);
 }
 
-client.on('message', (receivedMessage) => {
-	if (receivedMessage.author = client.user)
-		return
-	if (receivedMessage.content.startsWith("!bb"))
-		processCommand(receivedMessage)
-
-	}
-)
-
 // start the cron job
-task.start();
+task.start(); 
+
+ client.on('message', (receivedMessage) => {
+    if (receivedMessage.author == client.user) { // Prevent bot from responding to its own messages
+        return
+    }
+    
+    if (receivedMessage.content.startsWith("!")) {
+        processCommand(receivedMessage)
+    }
+})
 
 
-
-Client.login(TOKEN);
+client.login('ODU4MDI0OTk3MjgwNTQ2ODE2.YNYIDA.Ak4T3XUCtnn-epVdLNecB6jBbJ0');
