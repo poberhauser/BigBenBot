@@ -29,13 +29,13 @@ const task = cron.schedule('0 0 */1 * * *', async () => {
 	let { hour, amPm, timezoneOffsetString } = getTimeInfo();
 	console.log('BONG BONG BONG BONG')
 	// if text channel was defined send message in chat
-	if (textChannel) {
+	/* if (textChannel) {
 		const messageEmbed = new Discord.MessageEmbed()
 			.setColor('#FFD700')
 			.setTitle(`⏲️ The time is now ${hour}:00 ${amPm} GMT${timezoneOffsetString} ⏲️`)
 			.setFooter('powered by retardation')
-		textChannel.send(messageEmbed);
-	}
+		textChannel.send(messageEmbed); */
+	//}
 
 
 
