@@ -6,7 +6,7 @@ module.exports = {
     execute(message, args)
     {
         let time = new Date();
-        let realboytime = time.toLocaleTimeString("en-US", { timeZone: "America/New_York", hour: '2-digit', minute: '2-digit' });
+        let realboytime = time.toLocaleTimeString("en-US", { timeZone: "America/Chicago", hour: '2-digit', minute: '2-digit' });
         
         const messageEmbed = new Discord.MessageEmbed()
             .setColor('#FFD700')

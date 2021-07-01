@@ -63,8 +63,8 @@ const task = cron.schedule('0 0 */1 * * *', async () => {
 
 const getTimeInfo = () => {
 	let time = new Date();
-	let hour = parseInt(time.toLocaleTimeString("en-US", { timeZone: "America/New_York", hour: '2-digit' }));
-	let minutes = parseInt(time.toLocaleTimeString("en-US", { timeZone: "America/New_York", minute: '2-digit' }));
+	let hour = parseInt(time.toLocaleTimeString("en-US", { timeZone: "America/Chicago", hour: '2-digit' }));
+	let minutes = parseInt(time.toLocaleTimeString("en-US", { timeZone: "America/Chicago", minute: '2-digit' }));
 	return {
 		hour,
 		minutes
