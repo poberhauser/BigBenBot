@@ -33,6 +33,7 @@ client.on('message', message => {
 	}
 });
 
+
 const task = cron.schedule('0 0 */1 * * *', async () => {
 	let {hour} = getTimeInfo();
 	console.log('BONG BONG BONG BONG')
@@ -70,5 +71,6 @@ const getTimeInfo = () => {
 	}
 }
 
+task.start();
 
 client.login(token);
