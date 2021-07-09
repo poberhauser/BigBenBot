@@ -1,10 +1,25 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const cron = require('node-cron');
-const { prefix, token } = require('./config.json');
+const { prefix, token, guild_id, voice_channel_id, text_channel_id } = require('./config.json');
+
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
+
+let guild, voiceChannel, textChannel;
+
+client.on('ready', async () => {
+	try {
+		guild = await client.guilds.fetch(guild_id);
+		voiceChannel = guild.channels.cache.get(voice_channel_id);
+	}
+	catch (error) {
+		console.log(error);
+		process.exit(1);
+
+	}
+})
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
@@ -35,12 +50,14 @@ client.on('message', message => {
 
 
 const task = cron.schedule('0 0 */1 * * *', async () => {
-	let {hour} = getTimeInfo();
-	console.log('BONG BONG BONG BONG')
-	console.log(hour)
+	let { hour } = getTimeInfo();
+	console.log('BONG BONG BONG BONG');
+	console.log(hour);
+	console.log(voiceChannel.members.size);
 
 	if (voiceChannel.members.size >= 1) {
 		try {
+			console.log('Hello!')
 			const connection = await voiceChannel.join();
 			let count = 1;
 			(function play() {
