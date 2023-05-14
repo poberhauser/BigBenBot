@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {Client, GatewayIntentBits} = require('discord.js');
+const {Client, Collection, Events, GatewayIntentBits} = require('discord.js');
 const cron = require('node-cron');
 const { prefix, token, guild_id, voice_channel_id, text_channel_id } = require('./config.json');
 
@@ -10,7 +10,7 @@ const client = new Client({
 		GatewayIntentBits.Guilds,
 		GatewayIntentBits.GuildMessages
 		]});
-client.commands = new Discord.Collection();
+client.commands = new Collection();
 
 let guild, voiceChannel, textChannel;
 
