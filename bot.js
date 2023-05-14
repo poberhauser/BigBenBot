@@ -16,6 +16,8 @@ let guild, voiceChannel, textChannel;
 
 client.on('ready', async () => {
 	try {
+		console.log(voice_channel_id);
+		console.log(guild_id);
 		guild = await client.guilds.fetch(guild_id);
 		voiceChannel = guild.channels.cache.get(voice_channel_id);
 	}
